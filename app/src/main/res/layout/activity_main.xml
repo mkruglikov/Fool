@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    android:padding="16dp"
+    tools:context="ru.mkryglikov.smart.MainActivity">
+
+    <ImageView
+        android:id="@+id/btnExit"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_action_poweroff"
+        android:tint="@color/colorRed"
+        android:visibility="gone"/>
+
+    <!--<Button-->
+        <!--android:id="@+id/btn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/btnExit"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:background="@color/colorAccent"-->
+        <!--android:text="empty"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:visibility="invisible" />-->
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:textSize="36sp" />
+
+    <TextSwitcher
+        android:id="@+id/tsMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:inAnimation="@anim/fade_in"
+        android:outAnimation="@anim/fade_out" />
+
+    <TextView
+        android:id="@+id/tvSpeech"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:textSize="24sp" />
+
+    <ImageView
+        android:id="@+id/iv1"
+        android:layout_width="288dp"
+        android:layout_height="192dp"
+        android:layout_below="@+id/tsMain"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_toStartOf="@+id/iv2"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/iv2"
+        android:layout_width="288dp"
+        android:layout_height="192dp"
+        android:layout_below="@+id/tsMain"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/iv3"
+        android:layout_width="288dp"
+        android:layout_height="192dp"
+        android:layout_below="@+id/tsMain"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@+id/iv2"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/ivListen"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_action_listen"
+        android:tint="@android:color/black"
+        android:visibility="invisible" />
+
+    <ProgressBar
+        android:id="@+id/pbMain"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tsMain"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/ivVolume"
+        android:layout_alignBaseline="@+id/sbVolume"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:padding="6dp"
+        android:layout_alignStart="@+id/ivAlbumCover"
+        android:layout_above="@+id/ivAlbumCover"
+        android:src="@drawable/ic_volume_up"
+        android:tint="#212121"
+        android:visibility="invisible" />
+
+    <SeekBar
+        android:id="@+id/sbVolume"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_above="@+id/ivAlbumCover"
+        android:layout_alignEnd="@+id/rlMusicControl"
+        android:layout_toEndOf="@+id/ivVolume"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/ivAlbumCover"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="16dp"
+        android:background="@android:color/transparent"
+        android:elevation="10dp" />
+
+    <RelativeLayout
+        android:id="@+id/rlMusicControl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ivAlbumCover"
+        android:layout_alignTop="@+id/ivAlbumCover"
+        android:layout_toEndOf="@+id/ivAlbumCover">
+
+        <TextView
+            android:id="@+id/tvArtistTrack"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/ivPreviousTrack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_action_previous"
+            android:tint="@android:color/black"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/ivPlayPause"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_above="@+id/tvArtistTrack"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/ivPreviousTrack"
+            android:src="@drawable/ic_action_play"
+            android:tint="@android:color/black"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/ivNextTrack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="16dp"
+            android:layout_above="@+id/tvArtistTrack"
+            android:layout_toEndOf="@+id/ivPlayPause"
+            android:src="@drawable/ic_action_next"
+            android:tint="@android:color/black"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/ivChangeTrack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_above="@+id/tvArtistTrack"
+            android:layout_toEndOf="@+id/ivNextTrack"
+            android:src="@drawable/ic_action_refresh"
+            android:tint="@android:color/black"
+            android:visibility="invisible" />
+
+        <View
+            android:id="@+id/controlsDivider"
+            android:layout_width="1dp"
+            android:layout_height="32dp"
+            android:layout_above="@+id/tvArtistTrack"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/ivChangeTrack"
+            android:background="@android:color/black"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/ivRepeatTrack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_above="@+id/tvArtistTrack"
+            android:layout_marginEnd="16dp"
+            android:layout_toEndOf="@+id/controlsDivider"
+            android:src="@drawable/ic_action_repeat"
+            android:tint="#9e9e9e"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/ivShuffleTracks"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_above="@+id/tvArtistTrack"
+            android:layout_toEndOf="@+id/ivRepeatTrack"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_action_shuffle"
+            android:tint="#9e9e9e"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+</RelativeLayout>

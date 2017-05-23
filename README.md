@@ -9,6 +9,7 @@ Voice assistant based on Android Things and Raspberry Pi 3. It uses [Pocketsphin
   - tell the weather from Open Weather;
   - recognize and remember RFID tags;
   - make Wikipedia queries;
+  - translate from Russian to English or Chinese;
   - GPIO, turn on/off colors of the LED.
 
 ### Video demonstration:

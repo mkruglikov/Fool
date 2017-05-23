@@ -11,4 +11,4 @@ Voice assistant based on Android Things, Raspberry Pi 3. It uses [Pocketsphinx](
   - GPIO, turn on/onn the lights.
 
 ### Video demonstration:
-<a href="http://www.youtube.com/watch?v=0Jb0Qh_W2WQ" target="_blank"><img src="https://i.ytimg.com/vi_webp/0Jb0Qh_W2WQ/sddefault.webp"></a>
+[![Android Things voice assistant](https://i.ytimg.com/vi_webp/0Jb0Qh_W2WQ/sddefault.webp)](http://www.youtube.com/watch?v=0Jb0Qh_W2WQ)

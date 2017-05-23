@@ -1,6 +1,7 @@
 # Android Things voice assistant
 
-Voice assistant based on Android Things and Raspberry Pi 3. It uses [Pocketsphinx](https://github.com/cmusphinx/pocketsphinx-android) for wakeword recognition, [Yandex SpeechKit Mobile SDK](https://tech.yandex.ru/speechkit/mobilesdk/) for speech recognition and [Api.ai Android SDK](https://github.com/api-ai/apiai-android-client) for natural language understanding. Understands only Russian language.
+Voice assistant based on Android Things and Raspberry Pi 3. It uses [Pocketsphinx](https://github.com/cmusphinx/pocketsphinx-android) for wakeword recognition, [Yandex SpeechKit Mobile SDK](https://tech.yandex.ru/speechkit/mobilesdk/) for speech recognition and [Api.ai Android SDK](https://github.com/api-ai/apiai-android-client) for natural language understanding. It understands **only Russian language.**
+
 ### Abilities:
   - play music from Spotify;
   - manage tasks from Todoist;
@@ -8,7 +9,7 @@ Voice assistant based on Android Things and Raspberry Pi 3. It uses [Pocketsphin
   - tell the weather from Open Weather;
   - recognize and remember RFID tags;
   - make Wikipedia queries;
-  - GPIO, turn on/onn the lights.
+  - GPIO, turn on/off colors of the LED.
 
 ### Video demonstration:
 [![Android Things voice assistant](https://i.ytimg.com/vi_webp/0Jb0Qh_W2WQ/sddefault.webp)](http://www.youtube.com/watch?v=0Jb0Qh_W2WQ)

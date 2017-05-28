@@ -16,6 +16,6 @@ Simple voice assistant based on Android Things and Raspberry Pi 3. It uses [Pock
 [![Android Things voice assistant](https://i.ytimg.com/vi_webp/0Jb0Qh_W2WQ/sddefault.webp)](http://www.youtube.com/watch?v=0Jb0Qh_W2WQ)
 
 ### Usage
-To use it, you need Android Things(>= v.0.2) to be installed on your Rpi. Then connect microphone (you can use USB mic), speakers, monitor and if you want to use LED or RFID scanner, connect wires like on the image below. **When you first start, you will need a mouse to give some of the a permissions to the app.** Then you have to add your API keys in **Config.java**
+To use it, you need Android Things(>= v.0.2) to be installed on your Rpi. Then connect microphone (you can use USB mic), speakers, monitor and if you want to use LED or RFID scanner, connect it like on the image below. **When you first start, you will need a mouse to give a few permissions to the app.** Then you have to add your API keys in [**Config.java**](https://github.com/Mkryglikov/smart/blob/master/app/src/main/java/ru/mkryglikov/smart/Config.java)
 
 <img width="460" height="894" src="https://preview.ibb.co/iSnOFv/Smart_bb.png">

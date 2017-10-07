@@ -1,0 +1,6 @@
+/build
+/libs
+/release
+*.iml
+/proguard-rules.pro
+/assets.xml

@@ -1,47 +1,47 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.1'
     defaultConfig {
         applicationId 'ru.mkryglikov.smart'
         minSdkVersion 24
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     packagingOptions {
-        exclude 'META-INF/LICENSE'
         pickFirst('lib/*/libgnustl_shared.so')
-    }
-    productFlavors {
     }
 }
 
 dependencies {
-    compile project(':yandexSpeechKit')
-    compile project(':pocketsphinx')
-    compile 'ai.api:libai:1.4.8'
-    compile 'ai.api:sdk:2.0.5@aar'
-    compile 'commons-io:commons-io:2.4'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.galarzaa.android-things:rc522:0.1.1'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.amazonaws:aws-android-sdk-polly:2.3.4'
-    compile 'com.spotify.sdk:spotify-player-24-noconnect-2.20b@aar'
-    provided 'com.google.android.things:androidthings:0.3-devpreview'
+//    api 'com.android.support:support-core-utils:26.0.2'
+    api project(':yandexSpeechKit')
+    api 'ai.api:libai:1.6.12'
+    api 'ai.api:sdk:2.0.7@aar'
+//    api 'commons-io:commons-io:2.4'
+    api 'com.google.code.gson:gson:2.8.2'
+    api 'com.android.support:design:26.1.0'
+    api 'com.squareup.picasso:picasso:2.5.2'
+    api 'com.galarzaa.android-things:rc522:0.1.1'
+//    api 'com.android.support:appcompat-v7:26.0.2'
+    api 'com.amazonaws:aws-android-sdk-polly:2.6.2'
+    api 'com.spotify.sdk:spotify-player-24-noconnect-2.20b@aar'
+    api 'edu.cmu.pocketsphinx:pocketsphinx@aar'
+    provided 'com.google.android.things:androidthings:0.5.1-devpreview'
+    annotationProcessor 'org.apache.logging.log4j:log4j-core:2.2'
 }
 
 ant.importBuild 'assets.xml'
 preBuild.dependsOn(list, checksum)
 clean.dependsOn(clean_assets)
-

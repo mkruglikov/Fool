@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -77,13 +76,11 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
     private DateFormat utcDateFormat = new SimpleDateFormat("EEE dd MMM yyyy HH:mm:ss");
     private ImageView iv1, iv2, iv3, ivListen, ivAlbumCover, ivPlayPause, ivPreviousTrack, ivNextTrack, ivChangeTrack, ivRepeatTrack, ivShuffleTracks, ivVolume;
     private TextView tvSpeech, tvTime, tvArtistTrack;
-    private static AsyncTask<Void,Void,Void> atWake;
+    private static AsyncTask<Void, Void, Void> atWake;
     private SpeechRecognizer wakeWordRecognizer;
     private boolean isRfidBusy = false;
-    private static Handler timeHandler;
     private AudioManager audioManager;
     private SharedPreferences sPref;
-    private Typeface notoTypeface;
     private TextSwitcher tsMain;
     private ProgressBar pbMain;
     public static int volume;
@@ -113,15 +110,11 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        notoTypeface = Typeface.createFromAsset(getAssets(), "fonts/noto.otf");
-        tvSpeech = (TextView) findViewById(R.id.tvSpeech);
-        tvSpeech.setTypeface(notoTypeface);
-        tvTime = (TextView) findViewById(R.id.tvTime);
-        tvTime.setTypeface(notoTypeface);
-        tvArtistTrack = (TextView) findViewById(R.id.tvArtistTrack);
-        tvArtistTrack.setTypeface(notoTypeface);
-        pbMain = (ProgressBar) findViewById(R.id.pbMain);
-        tsMain = (TextSwitcher) findViewById(R.id.tsMain);
+        tvSpeech = findViewById(R.id.tvSpeech);
+        tvTime = findViewById(R.id.tvTime);
+        tvArtistTrack = findViewById(R.id.tvArtistTrack);
+        pbMain = findViewById(R.id.pbMain);
+        tsMain = findViewById(R.id.tsMain);
         tsMain.setFactory(new ViewSwitcher.ViewFactory() {
             public View makeView() {
                 TextView tv = new TextView(MainActivity.this);
@@ -131,7 +124,6 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
                         Gravity.CENTER));
                 tv.setTextSize(36);
                 tv.setTextColor(Color.BLACK);
-                tv.setTypeface(notoTypeface);
                 return tv;
             }
         });
@@ -233,7 +225,7 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
         String minutes = now.get(Calendar.MINUTE) >= 10 ? String.valueOf(now.get(Calendar.MINUTE)) : "0" + String.valueOf(now.get(Calendar.MINUTE));
         tvTime.setText(hours + ":" + minutes);
 
-        timeHandler = new Handler() {
+        final Handler timeHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 Calendar now = Calendar.getInstance();
@@ -243,24 +235,22 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
             }
         };
 
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
+        new Timer().scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 timeHandler.sendMessage(new Message());
             }
-        };
-        timer.scheduleAtFixedRate(task, 0, 60 * 1000);
+        }, 0, 60 * 1000);
 
-        iv1 = (ImageView) findViewById(R.id.iv1);
-        iv2 = (ImageView) findViewById(R.id.iv2);
-        iv3 = (ImageView) findViewById(R.id.iv3);
+        iv1 = findViewById(R.id.iv1);
+        iv2 = findViewById(R.id.iv2);
+        iv3 = findViewById(R.id.iv3);
 
-        ivAlbumCover = (ImageView) findViewById(R.id.ivAlbumCover);
+        ivAlbumCover = findViewById(R.id.ivAlbumCover);
         ivAlbumCover.setElevation(8);
-        ivListen = (ImageView) findViewById(R.id.ivListen);
-        ivVolume = (ImageView) findViewById(R.id.ivVolume);
+        ivListen = findViewById(R.id.ivListen);
+        ivVolume = findViewById(R.id.ivVolume);
 
-        ivPreviousTrack = (ImageView) findViewById(R.id.ivPreviousTrack);
+        ivPreviousTrack = findViewById(R.id.ivPreviousTrack);
         ivPreviousTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -268,7 +258,7 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
             }
         });
 
-        ivNextTrack = (ImageView) findViewById(R.id.ivNextTrack);
+        ivNextTrack = findViewById(R.id.ivNextTrack);
         ivNextTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -276,7 +266,7 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
             }
         });
 
-        ivPlayPause = (ImageView) findViewById(R.id.ivPlayPause);
+        ivPlayPause = findViewById(R.id.ivPlayPause);
         ivPlayPause.setTag(0);
         ivPlayPause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -292,7 +282,7 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
             }
         });
 
-        ivChangeTrack = (ImageView) findViewById(R.id.ivChangeTrack);
+        ivChangeTrack = findViewById(R.id.ivChangeTrack);
         ivChangeTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -302,7 +292,7 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
             }
         });
 
-        ivRepeatTrack = (ImageView) findViewById(R.id.ivRepeatTrack);
+        ivRepeatTrack = findViewById(R.id.ivRepeatTrack);
         ivRepeatTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -310,7 +300,7 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
             }
         });
 
-        ivShuffleTracks = (ImageView) findViewById(R.id.ivShuffleTracks);
+        ivShuffleTracks = findViewById(R.id.ivShuffleTracks);
         ivShuffleTracks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

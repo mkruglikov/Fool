@@ -1,1 +1,1 @@
-include ':app', ':pocketsphinx', ':yandexSpeechKit'
+include ':app', ':yandexSpeechKit'

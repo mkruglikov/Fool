@@ -1,5 +1,4 @@
-# Fool
-# Russian Android Things voice assistant
+# Fool. Russian Android Things voice assistant
 
 Simple voice assistant based on Android Things and Raspberry Pi 3. It uses [Pocketsphinx](https://github.com/cmusphinx/pocketsphinx-android) for wakeword recognition, [Yandex SpeechKit Mobile SDK](https://tech.yandex.ru/speechkit/mobilesdk/) for speech recognition and [Api.ai Android SDK](https://github.com/api-ai/apiai-android-client) for natural language understanding. It understands **only Russian language.**
 

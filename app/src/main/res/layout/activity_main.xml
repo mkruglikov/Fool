@@ -34,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:elevation="6dp"
         android:textSize="36sp" />
 
     <TextSwitcher
@@ -41,6 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:elevation="8dp"
         android:inAnimation="@anim/fade_in"
         android:outAnimation="@anim/fade_out" />
 
@@ -134,8 +136,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_margin="16dp"
-        android:background="@android:color/transparent"
-        android:elevation="10dp" />
+        android:background="@android:color/transparent" />
 
     <RelativeLayout
         android:id="@+id/rlMusicControl"

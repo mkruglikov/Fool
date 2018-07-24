@@ -2,7 +2,6 @@ package ru.mkryglikov.smart;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -51,6 +50,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -71,12 +71,14 @@ import ru.mkryglikov.smart.skills.YandexTranslator;
 import ru.yandex.speechkit.Error;
 import ru.yandex.speechkit.SpeechKit;
 
+import static ru.mkryglikov.smart.Config.TAG;
+
 public class MainActivity extends Activity implements edu.cmu.pocketsphinx.RecognitionListener, Rfid.RfidListener {
 
     private DateFormat utcDateFormat = new SimpleDateFormat("EEE dd MMM yyyy HH:mm:ss");
     private ImageView iv1, iv2, iv3, ivListen, ivAlbumCover, ivPlayPause, ivPreviousTrack, ivNextTrack, ivChangeTrack, ivRepeatTrack, ivShuffleTracks, ivVolume;
     private TextView tvSpeech, tvTime, tvArtistTrack;
-    private static AsyncTask<Void, Void, Void> atWake;
+    private AsyncTask<Void, Void, Void> atWake;
     private SpeechRecognizer wakeWordRecognizer;
     private boolean isRfidBusy = false;
     private AudioManager audioManager;
@@ -101,6 +103,7 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
     private Lights lights;
     private Polly polly;
 
+    private static final int PERMISSIONS_REQUEST_SET_TIME_ZONE = 3;
     private static final int PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 2;
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
     private static final String WAKEUP = "wakeup";
@@ -109,6 +112,7 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.i(TAG, "ONCREATE!");
 
         tvSpeech = findViewById(R.id.tvSpeech);
         tvTime = findViewById(R.id.tvTime);
@@ -136,6 +140,10 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
             return;
         }
+//        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.SET_TIME_ZONE) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SET_TIME_ZONE}, PERMISSIONS_REQUEST_SET_TIME_ZONE);
+//            return;
+//        }
 
 //        btn = (Button) findViewById(R.id.btn);
 //        btn.setEnabled(false);
@@ -218,8 +226,8 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
         recognitionListener = new YandexRecognitionListener(this);
 //        lights.change("all", "off");
 
-        AlarmManager am = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        am.setTimeZone(Config.TIMEZONE);
+//        AlarmManager am = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+//        am.setTimeZone(Config.TIMEZONE);
         Calendar now = Calendar.getInstance();
         String hours = now.get(Calendar.HOUR_OF_DAY) >= 10 ? String.valueOf(now.get(Calendar.HOUR_OF_DAY)) : "0" + String.valueOf(now.get(Calendar.HOUR_OF_DAY));
         String minutes = now.get(Calendar.MINUTE) >= 10 ? String.valueOf(now.get(Calendar.MINUTE)) : "0" + String.valueOf(now.get(Calendar.MINUTE));
@@ -229,6 +237,7 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
             @Override
             public void handleMessage(Message msg) {
                 Calendar now = Calendar.getInstance();
+                now.setTimeZone(TimeZone.getTimeZone(Config.TIMEZONE));
                 String hours = now.get(Calendar.HOUR_OF_DAY) >= 10 ? String.valueOf(now.get(Calendar.HOUR_OF_DAY)) : "0" + String.valueOf(now.get(Calendar.HOUR_OF_DAY));
                 String minutes = now.get(Calendar.MINUTE) >= 10 ? String.valueOf(now.get(Calendar.MINUTE)) : "0" + String.valueOf(now.get(Calendar.MINUTE));
                 tvTime.setText(hours + ":" + minutes);
@@ -331,10 +340,20 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
                 } else
                     finish();
                 break;
+            case PERMISSIONS_REQUEST_SET_TIME_ZONE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.SET_TIME_ZONE) != PackageManager.PERMISSION_GRANTED)
+                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SET_TIME_ZONE}, PERMISSIONS_REQUEST_SET_TIME_ZONE);
+                    else
+                        initialize();
+                } else
+                    finish();
+                break;
         }
     }
 
     private void initialize() {
+        Log.i(TAG, "INITIALIZE!");
         new AsyncTask<Void, Void, Exception>() {
             @Override
             protected void onPreExecute() {
@@ -440,7 +459,9 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
             wakeWordRecognizer.cancel();
             wakeWordRecognizer.shutdown();
         }
-        spotifyMusic.destroy();
+        if (spotifyMusic != null) {
+            spotifyMusic.destroy();
+        }
         super.onDestroy();
     }
 
@@ -514,12 +535,12 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
 
             if (params != null && !params.isEmpty()) {
                 for (final Map.Entry<String, JsonElement> entry : params.entrySet()) {
-                    Log.d(Config.TAG, entry.getKey() + " : " + entry.getValue().toString());
+                    Log.d(TAG, entry.getKey() + " : " + entry.getValue().toString());
                 }
             }
             //todo
             if (speech != null && !speech.equals("") && ((params.get("simplified") != null && !params.get("simplified").getAsString().equals("one-color")) || (params.get("simplified") == null))) {
-                Log.d(Config.TAG, "doAction: SPEECH");
+                Log.d(TAG, "doAction: SPEECH");
                 tsMain.setText(speech);
                 polly.say(speech, Polly.Lang.Ru, new Polly.SpeechEndListener() {
                     @Override
@@ -532,7 +553,7 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
 
             if (result.getMetadata() != null && result.getMetadata().getIntentName() != null) {
                 final String intent = result.getMetadata().getIntentName();
-                Log.d(Config.TAG, "intent: " + intent);
+                Log.d(TAG, "intent: " + intent);
                 switch (intent) {
                     case "light":
                         try {
@@ -761,7 +782,7 @@ public class MainActivity extends Activity implements edu.cmu.pocketsphinx.Recog
                                     e.printStackTrace();
                                     return null;
                                 }
-                                Log.d(Config.TAG, sb.toString());
+                                Log.d(TAG, sb.toString());
                                 return sb.toString();
                             }
 
